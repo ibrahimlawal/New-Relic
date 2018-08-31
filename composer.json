@@ -1,8 +1,8 @@
 {
-    "name": "topshelfcraft/new-relic",
-    "description": "This plugin helps instrument your Craft app with New Relic APM by setting transaction names and (optionally) an App Name on each request.",
+    "name": "ibrahimlawal/new-relic-craft-3",
+    "description": "Fork of TopShelfCraft/New-Relic This plugin helps instrument your Craft 3 app with New Relic APM by setting transaction names and (optionally) an App Name on each request.",
     "type": "craft-plugin",
-    "version": "3.0.2",
+    "version": "0.0.1",
     "keywords": [
         "craft",
         "cms",
@@ -11,14 +11,18 @@
         "new relic"
     ],
     "support": {
-        "docs": "https://github.com/TopShelfCraft/New-Relic",
-        "issues": "https://github.com/TopShelfCraft/New-Relic/issues"
+        "docs": "https://github.com/ibrahimlawal/New-Relic",
+        "issues": "https://github.com/ibrahimlawal/New-Relic/issues"
     },
     "license": "MIT",
     "authors": [
         {
             "name": "Michael Rog",
             "homepage": "https://topshelfcraft.com"
+        },
+        {
+            "name": "Ibrahim Lawal",
+            "homepage": "https://ibrahim.lawal.me"
         }
     ],
     "require": {
@@ -26,16 +30,16 @@
     },
     "autoload": {
         "psr-4": {
-          "topshelfcraft\\newrelic\\": "src/"
+          "ibrahimlawal\\newrelic\\": "src/"
         }
     },
     "extra": {
-        "name": "New Relic",
-        "handle": "new-relic",
-        "schemaVersion": "0.0.0.0",
+        "name": "New Relic for Craft 3",
+        "handle": "new-relic-craft-3",
+        "schemaVersion": "0.0.0.1",
         "hasCpSettings": true,
         "hasCpSection": false,
-        "changelogUrl": "https://raw.githubusercontent.com/topshelfcraft/new-relic/master/CHANGELOG.md",
-        "class": "topshelfcraft\\newrelic\\NewRelic"
+        "changelogUrl": "https://raw.githubusercontent.com/ibrahimlawal/new-relic/master/CHANGELOG.md",
+        "class": "ibrahimlawal\\newrelic\\NewRelic"
     }
 }

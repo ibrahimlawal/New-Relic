@@ -1,4 +1,5 @@
 <?php
+
 /**
  * New Relic
  *
@@ -8,12 +9,11 @@
  * @see        https://github.com/TopShelfCraft/New-Relic
  */
 
-namespace topshelfcraft\newrelic;
-
-use topshelfcraft\newrelic\models\Settings;
+namespace ibrahimlawal\newrelic;
 
 use Craft;
 use craft\base\Plugin;
+use ibrahimlawal\newrelic\models\Settings;
 
 /**
  * @author    Top Shelf Craft (Michael Rog)
@@ -36,7 +36,6 @@ class NewRelic extends Plugin
      */
     public static $plugin;
 
-
     /*
      * Public Methods
      * =========================================================================
@@ -48,45 +47,33 @@ class NewRelic extends Plugin
         parent::init();
         self::$plugin = $this;
 
-        if (extension_loaded('newrelic'))
-		{
+        if (extension_loaded('newrelic')) {
 
-			if (!empty($this->getSettings()->appName))
-			{
-				newrelic_set_appname($this->getSettings()->appName);
-			}
+            if (!empty($this->getSettings()->appName)) {
+                newrelic_set_appname($this->getSettings()->appName);
+            }
 
-			$name = Craft::$app->getRequest()->getSegment(1);
+            $name = Craft::$app->getRequest()->getSegment(1);
 
-			if (Craft::$app->getRequest()->getSegment(2))
-			{
-				$name .= "/" . Craft::$app->getRequest()->getSegment(2);
-			}
+            if (Craft::$app->getRequest()->getSegment(2)) {
+                if ($this->getSettings()->includeSegment2 === '1') {
+                    $name .= "/" . Craft::$app->getRequest()->getSegment(2);
+                } else {
+                    $name .= "/*";
+                }
+            }
 
-			if (Craft::$app->getRequest()->getIsLivePreview())
-			{
-				$name = "/LivePreview/{$name}";
-			}
-			elseif (Craft::$app->getRequest()->getIsCpRequest())
-			{
-				$name = Craft::$app->getConfig()->getGeneral()->cpTrigger . "/{$name}";
-			}
+            if (Craft::$app->getRequest()->getIsLivePreview()) {
+                $name = "/LivePreview/{$name}";
+            } elseif (Craft::$app->getRequest()->getIsCpRequest()) {
+                $name = Craft::$app->getConfig()->getGeneral()->cpTrigger . "/{$name}";
+            }
 
-			newrelic_name_transaction($name);
+            newrelic_name_transaction($name);
 
-//			Craft::info(
-//				Craft::t(
-//					'new-relic',
-//					'New Relic transaction named: {name}',
-//					['name' => $name]
-//				),
-//				'new-relic'
-//			);
-
-		}
+        }
 
     }
-
 
     /*
      * Protected Methods
@@ -114,7 +101,7 @@ class NewRelic extends Plugin
         return Craft::$app->view->renderTemplate(
             'new-relic/settings',
             [
-                'settings' => $this->getSettings()
+                'settings' => $this->getSettings(),
             ]
         );
     }
