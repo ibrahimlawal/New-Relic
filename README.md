@@ -28,7 +28,7 @@ This plugin helps connect your Craft app with New Relic APM by setting transacti
 1. From your project directory, use Composer to require the plugin package:
 
    ```
-   composer require ibrahimlawal/new-relic
+   composer require ibrahimlawal/new-relic-craft-3
    ```
 
 2. In the Control Panel, go to Settings → Plugins and click the “Install” button for _New Relic_.

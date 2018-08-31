@@ -99,7 +99,7 @@ class NewRelic extends Plugin
     protected function settingsHtml(): string
     {
         return Craft::$app->view->renderTemplate(
-            'new-relic/settings',
+            'new-relic-craft-3/settings',
             [
                 'settings' => $this->getSettings(),
             ]
