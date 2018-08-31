@@ -2,7 +2,7 @@
     "name": "ibrahimlawal/new-relic-craft-3",
     "description": "Fork of TopShelfCraft/New-Relic This plugin helps instrument your Craft 3 app with New Relic APM by setting transaction names and (optionally) an App Name on each request.",
     "type": "craft-plugin",
-    "version": "0.0.1",
+    "version": "1.0.0",
     "keywords": [
         "craft",
         "cms",
