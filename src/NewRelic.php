@@ -83,12 +83,6 @@ class NewRelic extends Plugin
                     }
                 }
     
-                if (Craft::$app->getRequest()->getIsLivePreview()) {
-                    $name = "/LivePreview/{$name}";
-                } elseif (Craft::$app->getRequest()->getIsCpRequest()) {
-                    $name = Craft::$app->getConfig()->getGeneral()->cpTrigger . "/{$name}";
-                }
-
 				if ($request->getIsLivePreview())
 				{
 					$name = "LivePreview/{$name}";
