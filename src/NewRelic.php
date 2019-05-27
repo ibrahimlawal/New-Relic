@@ -53,21 +53,52 @@ class NewRelic extends Plugin
                 newrelic_set_appname($this->getSettings()->appName);
             }
 
-            $name = Craft::$app->getRequest()->getSegment(1);
+			$request = Craft::$app->getRequest();
 
-            if (Craft::$app->getRequest()->getSegment(2)) {
-                if ($this->getSettings()->includeSegment2 === '1') {
-                    $name .= "/" . Craft::$app->getRequest()->getSegment(2);
-                } else {
-                    $name .= "/*";
+			if ($request->getIsConsoleRequest()) {
+
+				/*
+				 * Console requests have no concept of a URI or segments,
+				 * so we'll name the transaction based on the resolved route.
+				 */
+
+				$route = ($request->resolve())[0];
+				$name = "Console/{$route}";
+
+			}
+			else
+			{
+
+				/*
+				 * We're in a web request, so we can name the transaction based on segments/context.
+				 */
+
+                $name = Craft::$app->getRequest()->getSegment(1);
+
+                if (Craft::$app->getRequest()->getSegment(2)) {
+                    if ($this->getSettings()->includeSegment2 === '1') {
+                        $name .= "/" . Craft::$app->getRequest()->getSegment(2);
+                    } else {
+                        $name .= "/*";
+                    }
                 }
-            }
+    
+                if (Craft::$app->getRequest()->getIsLivePreview()) {
+                    $name = "/LivePreview/{$name}";
+                } elseif (Craft::$app->getRequest()->getIsCpRequest()) {
+                    $name = Craft::$app->getConfig()->getGeneral()->cpTrigger . "/{$name}";
+                }
 
-            if (Craft::$app->getRequest()->getIsLivePreview()) {
-                $name = "/LivePreview/{$name}";
-            } elseif (Craft::$app->getRequest()->getIsCpRequest()) {
-                $name = Craft::$app->getConfig()->getGeneral()->cpTrigger . "/{$name}";
-            }
+				if ($request->getIsLivePreview())
+				{
+					$name = "LivePreview/{$name}";
+				}
+				elseif ($request->getIsCpRequest())
+				{
+					$name = Craft::$app->getConfig()->getGeneral()->cpTrigger . "/{$name}";
+				}
+
+			}
 
             newrelic_name_transaction($name);
 
